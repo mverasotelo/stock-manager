@@ -1,0 +1,29 @@
+{
+  "stockmanagerApp": {
+    "alert": {
+      "home": {
+        "title": "Alertas",
+        "notFound": "Ninguna alerta encontrada",
+        "history": "Historial de alertas",
+        "active": "Mostrar alertas activas"
+      },
+      "deleted": "Una alerta ha sido eliminada con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar el alerta?"
+      },
+      "detail": {
+        "title": "Alerta"
+      },
+      "id": "Id",
+      "datetime": "Fecha",
+      "type": "Tipo",
+      "rectificationDatetime": "Fecha de subsanación",
+      "section": "Sección",
+      "AlertType": {
+        "null": "",
+        "REORDER_POINT": "Punto de Reorden",
+        "STOCKOUT": "Stock Out"
+      }
+    }
+  }
+}

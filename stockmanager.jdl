@@ -1,0 +1,112 @@
+
+/**
+ * Article entity.
+ * @author Mercedes Vera Sotelo.
+ */ 
+entity Article {
+    code String
+    description String
+    type ArticleType
+}
+
+/**
+ * Stock entity.
+ * @author Mercedes Vera Sotelo.
+ */ 
+entity Stock {
+	id Long
+    actualStock Long
+    reorderPoint Long
+    maxStock Long
+	section String
+  	level String
+    rack String
+}
+
+/**
+ * Store entity.
+ * @author Mercedes Vera Sotelo.
+ */ 
+entity Store {
+	id Long
+    code String
+  	type StoreType
+}
+
+
+/**
+ * Action entity.
+ * @author Mercedes Vera Sotelo.
+ */ 
+entity Action {
+	datetime Instant
+    type ActionType
+	quantity Long
+}
+
+/**
+ * Alert entity.
+ * @author Mercedes Vera Sotelo.
+ */ 
+entity Alert {
+	id Long
+	datetime Instant 
+    type AlertType    
+    rectificationDatetime Instant
+}
+
+/**
+ * Employee entity.
+ * @author Mercedes Vera Sotelo.
+ */ 
+entity Employee {
+	codigo Long
+	name String
+}
+
+enum Language {
+    ENGLISH, SPANISH
+}
+
+enum StoreType {
+    MAIN, SATELITE, CONSUMPTION_POINT
+}
+
+enum ArticleType {
+    PPE, INPUT, MAINTENANCE_INPUT, TOOL
+}
+
+enum AlertType {
+    REORDER_POINT, STOCKOUT
+}
+
+enum ActionType {
+    IN, OUT
+}
+
+relationship OneToMany {
+    Article{stocks} to Stock
+    Employee to Action{employee}
+    Store{alerts} to Alert{provider} 
+	Stock{alerts} to Alert{section}
+    Stock{actions} to Action{section}
+    Store{stocks} to Stock{store},
+}
+
+// Set pagination options
+paginate Store, Article, Action, Alert, Stock with infinite-scroll
+
+// Set filter options
+filter Article
+filter Action
+filter Alert
+
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all
+service all with serviceImpl
+
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

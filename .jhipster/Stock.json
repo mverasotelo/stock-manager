@@ -1,0 +1,70 @@
+{
+  "applications": "*",
+  "changelogDate": "20230403140710",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "stock",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "actualStock",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "reorderPoint",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "maxStock",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "section",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "level",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "rack",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "Stock entity.\\n@author Mercedes Vera Sotelo.",
+  "jpaMetamodelFiltering": true,
+  "name": "Stock",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "alert",
+      "otherEntityRelationshipName": "stock",
+      "relationshipName": "alerts",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "action",
+      "otherEntityRelationshipName": "stock",
+      "relationshipName": "actions",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "article",
+      "otherEntityRelationshipName": "stocks",
+      "relationshipName": "article",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "store",
+      "otherEntityRelationshipName": "stocks",
+      "relationshipName": "store",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

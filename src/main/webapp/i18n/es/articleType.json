@@ -1,0 +1,11 @@
+{
+  "stockmanagerApp": {
+    "ArticleType": {
+      "null": "",
+      "PPE": "EPI",
+      "INPUT": "Insumo de producción",
+      "MAINTENANCE_INPUT": "Insumo de mantenimiento",
+      "TOOL": "Herramienta"
+    }
+  }
+}

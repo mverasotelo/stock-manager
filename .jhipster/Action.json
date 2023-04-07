@@ -1,0 +1,58 @@
+{
+  "applications": "*",
+  "changelogDate": "20230403140712",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "action",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "code",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "datetime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "ActionType",
+      "fieldValues": "IN,OUT"
+    },
+    {
+      "fieldName": "quantity",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "Action entity.\\n@author Mercedes Vera Sotelo.",
+  "jpaMetamodelFiltering": true,
+  "name": "Action",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "action",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "stock",
+      "otherEntityRelationshipName": "actions",
+      "relationshipName": "stock",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "store",
+      "otherEntityRelationshipName": "actions",
+      "relationshipName": "store",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

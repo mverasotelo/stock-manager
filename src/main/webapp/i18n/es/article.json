@@ -1,0 +1,26 @@
+{
+  "stockmanagerApp": {
+    "article": {
+      "home": {
+        "title": "Artículos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Agregar artículo",
+        "createOrEditLabel": "Crear o editar artículo",
+        "notFound": "No se han encontrado artículos"
+      },
+      "created": "Se ha creado el artículo {{ param }}",
+      "updated": "Se ha actualizado el artículo {{ param }}",
+      "deleted": "Se ha eliminado el artículo",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar el artículo {{ id }}?"
+      },
+      "detail": {
+        "title": "Artículo"
+      },
+      "id": "ID",
+      "code": "Código",
+      "description": "Descripción",
+      "type": "Tipo"
+    }
+  }
+}

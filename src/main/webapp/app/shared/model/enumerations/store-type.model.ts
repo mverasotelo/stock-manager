@@ -1,0 +1,7 @@
+export enum StoreType {
+  MAIN = 'MAIN',
+
+  SATELITE = 'SATELITE',
+
+  CONSUMPTION_POINT = 'CONSUMPTION_POINT',
+}

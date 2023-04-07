@@ -1,0 +1,33 @@
+{
+  "applications": "*",
+  "changelogDate": "20230403140714",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "employee",
+  "fields": [
+    {
+      "fieldName": "codigo",
+      "fieldType": "Long",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "Employee entity.\\n@author Mercedes Vera Sotelo.",
+  "jpaMetamodelFiltering": false,
+  "name": "Employee",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "action",
+      "otherEntityRelationshipName": "employee",
+      "relationshipName": "action",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

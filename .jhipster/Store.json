@@ -1,0 +1,50 @@
+{
+  "applications": "*",
+  "changelogDate": "20230403140711",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "store",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "code",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "StoreType",
+      "fieldValues": "MAIN,SATELITE,CONSUMPTION_POINT"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "Store entity.\\n@author Mercedes Vera Sotelo.",
+  "jpaMetamodelFiltering": false,
+  "name": "Store",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "alert",
+      "otherEntityRelationshipName": "provider",
+      "relationshipName": "alerts",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "stock",
+      "otherEntityRelationshipName": "store",
+      "relationshipName": "stocks",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "action",
+      "otherEntityRelationshipName": "store",
+      "relationshipName": "actions",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

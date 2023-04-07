@@ -1,0 +1,47 @@
+{
+  "applications": "*",
+  "changelogDate": "20230403140713",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "alert",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "datetime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "AlertType",
+      "fieldValues": "REORDER_POINT,STOCKOUT"
+    },
+    {
+      "fieldName": "rectificationDatetime",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "Alert entity.\\n@author Mercedes Vera Sotelo.",
+  "jpaMetamodelFiltering": true,
+  "name": "Alert",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "store",
+      "otherEntityRelationshipName": "alerts",
+      "relationshipName": "provider",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "stock",
+      "otherEntityRelationshipName": "alerts",
+      "relationshipName": "stock",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

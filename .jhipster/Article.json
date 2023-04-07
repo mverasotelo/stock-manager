@@ -1,0 +1,42 @@
+{
+  "applications": "*",
+  "changelogDate": "20230403140709",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "article",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "code",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "ArticleType",
+      "fieldValues": "PPE,INPUT,MAINTENANCE_INPUT,TOOL"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "Article entity.\\n@author Mercedes Vera Sotelo.",
+  "jpaMetamodelFiltering": true,
+  "name": "Article",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "stock",
+      "otherEntityRelationshipName": "article",
+      "relationshipName": "stocks",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

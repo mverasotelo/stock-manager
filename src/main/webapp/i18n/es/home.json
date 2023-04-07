@@ -1,0 +1,15 @@
+{
+  "home": {
+    "title": "¡Bienvenido!",
+    "logged": {
+      "message": "Está conectado como \"{{username}}\"."
+    },
+    "buttons": {
+      "in":"Entrada",
+      "out":"Salida",
+      "inventory":"Inventario",
+      "alerts":"Alertas",
+      "articles":"Artículos por Código"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "stockmanagerApp": {
+    "stock": {
+      "home": {
+        "title": "Inventario",
+        "createLabel": "Agregar artículo al inventario",
+        "createOrEditLabel": "Editar artículo en inventario",
+        "notFound": "No se encontraron existencias"
+      },
+      "created": "Se ha generado el stock",
+      "updated": "Se ha actualizado el stock",
+      "deleted": "Se ha eliminado",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar el stock?"
+      },
+      "detail": {
+        "title": "Artículo en inventario"
+      },
+      "id": "Id",
+      "actualStock": "Stock actual",
+      "initialStock": "Stock inicial",
+      "reorderPoint": "Punto de reorden",
+      "maxStock": "Capacidad máxima",
+      "section": "Sección",
+      "article": "Descripción",
+      "rack": "Estantería",
+      "level": "Nivel",
+      "store": "Almacén",
+      "articleCode": "Código Producto"
+    }
+  }
+}

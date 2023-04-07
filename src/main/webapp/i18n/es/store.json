@@ -1,0 +1,32 @@
+{
+  "stockmanagerApp": {
+    "store": {
+      "home": {
+        "title": "Almacenes",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Agregar almacén",
+        "createOrEditLabel": "Crear o editar almacén",
+        "notFound": "Ningún almacén encontrado"
+      },
+      "created": "Un nuevo almacén ha sido creado con el identificador {{ param }}",
+      "updated": "Un almacén ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un almacén ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar el almacén {{ code }}?"
+      },
+      "detail": {
+        "title": "Almacén"
+      },
+      "id": "Id",
+      "code": "Código",
+      "type": "Tipo",
+      "provider": "Proveedor",
+      "storeType": {
+        "null": "",
+        "MAIN": "Central",
+        "SATELITE": "Satélite",
+        "CONSUMPTION_POINT": "Punto de Consumo"
+      }
+    }
+  }
+}

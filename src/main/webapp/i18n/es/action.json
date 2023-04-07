@@ -1,0 +1,44 @@
+{
+  "stockmanagerApp": {
+    "action": {
+      "home": {
+        "title": "Historial de movimientos de stock",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Action",
+        "createOrEditLabel": "Crear o editar Action",
+        "notFound": "No se encontaron movimientos",
+        "actionType": {
+          "null": "",
+          "IN": "Ingreso de stock",
+          "OUT": "Egreso de stock"
+        },
+        "history": {
+          "IN": "Ingresos de stock",
+          "OUT": "Egresos de stock"
+        }
+      },
+      "created": "Se ha registrado el movimiento de stock",
+      "updated": "Se ha registrado el movimiento de stock",
+      "deleted": "Se ha eliminado el movimiento de stock",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar el movimiento {{ id }}?"
+      },
+      "detail": {
+        "title": "Movimiento"
+      },
+      "id": "ID",
+      "datetime": "Fecha",
+      "type": "Tipo de movimiento",
+      "quantity": "Cantidad",
+      "employee": "Empleado",
+      "stock": "Artículo",
+      "code": "Código",
+      "destinationStore": "Almacén de destino",
+      "actionType": {
+        "null": "",
+        "IN": "Entrada",
+        "OUT": "Salida"
+      }
+    }
+  }
+}
