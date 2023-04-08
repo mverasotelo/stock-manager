@@ -1,19 +1,14 @@
 package com.mvs.stockmanager.web.rest;
 
-import com.mvs.stockmanager.domain.Article;
-import com.mvs.stockmanager.repository.ArticleRepository;
-import com.mvs.stockmanager.service.ArticleQueryService;
-import com.mvs.stockmanager.service.ArticleService;
-import com.mvs.stockmanager.service.criteria.ArticleCriteria;
-import com.mvs.stockmanager.service.dto.ArticleDTO;
-import com.mvs.stockmanager.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,10 +16,28 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import tech.jhipster.service.filter.StringFilter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mvs.stockmanager.repository.ArticleRepository;
+import com.mvs.stockmanager.service.ArticleQueryService;
+import com.mvs.stockmanager.service.ArticleService;
+import com.mvs.stockmanager.service.criteria.ArticleCriteria;
+import com.mvs.stockmanager.service.dto.ArticleDTO;
+import com.mvs.stockmanager.web.rest.errors.BadRequestAlertException;
+
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -162,17 +175,22 @@ public class ArticleResource {
      * @param pageable the pagination information.
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of articles in body.
+     * @throws JsonProcessingException
+     * @throws JsonMappingException
      */
     @GetMapping("/articles")
     public ResponseEntity<List<ArticleDTO>> getAllArticles(
-        String article,
+        @RequestParam(required = false) String criteria,
         Pageable pageable
-    ) {
-        log.debug("REST request to get Articles by criteria: {}", article);
+    ) throws JsonMappingException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        
+        ArticleCriteria criteriaObject = objectMapper.readValue(criteria, ArticleCriteria.class);
 
-        ArticleCriteria criteria = articleQueryService.convertToCriteriaObject(article);
+        log.debug("REST request to get Actions by criteria: {}", criteriaObject);
 
-        Page<ArticleDTO> page = articleQueryService.findByCriteria(criteria, pageable);
+        Page<ArticleDTO> page = articleQueryService.findByCriteria(criteriaObject, pageable);
+
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

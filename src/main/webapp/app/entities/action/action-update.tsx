@@ -11,6 +11,7 @@ import { getEntities as getStocks } from 'app/entities/stock/stock.reducer';
 import { getEntities as getStores } from 'app/entities/store/store.reducer';
 import { ActionType } from 'app/shared/model/enumerations/action-type.model';
 import { createEntity, getEntity, updateEntity } from './action.reducer';
+import { useForm } from 'react-hook-form';
 
 export const ActionUpdate = () => {
   const dispatch = useAppDispatch();
@@ -31,7 +32,7 @@ export const ActionUpdate = () => {
   const [selectedStock, setSelectedStock] = useState(0);
 
   const handleClose = () => {
-    navigate('/');
+    navigate('/action/new/'+actionType);
   };
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export const ActionUpdate = () => {
 
   useEffect(() => {
     if (updateSuccess) {
+      setSelectedStock(0);
       handleClose();
     }
   }, [updateSuccess]);
@@ -65,6 +67,7 @@ export const ActionUpdate = () => {
     const entity = {
       ...actionEntity,
       ...values,
+      id:null,
       type: actionType,
       store:null,
       stock
@@ -101,11 +104,20 @@ export const ActionUpdate = () => {
 
   return (
     <div>
-      <br/><br/>
+      <h2 id="action-heading" data-cy="ActionHeading">
+        <div className="d-flex justify-content-end">
+          <Link to={"/action/type/"+actionType} className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+            <FontAwesomeIcon icon="eye" />
+            &nbsp;
+            <Translate contentKey="stockmanagerApp.action.home.historyLabel" interpolate={{ type: actionType=="IN" ? "ingresos" : "egresos"}}/>  
+            </Link>
+        </div>
+      </h2>
+      <br/>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="stockmanagerApp.action.home.createOrEditLabel" data-cy="ActionCreateUpdateHeading">
-            {translate('stockmanagerApp.action.home.actionType.' + actionType)}
+          <h2 className="text-center" id="stockmanagerApp.article.home.historyLabel" data-cy="ArticleCreateUpdateHeading">
+          {translate('stockmanagerApp.action.home.actionType.' + actionType)}
           </h2>
         </Col>
       </Row>
@@ -115,7 +127,7 @@ export const ActionUpdate = () => {
           {loading ? (
             <p>Loading...</p>
           ) : (
-            <ValidatedForm onSubmit={saveEntity}>
+            <ValidatedForm className="bg-light p-3 rounded" onSubmit={saveEntity}>
               {/* {!isNew ? (
                 <ValidatedField
                   name="id"
@@ -149,7 +161,7 @@ export const ActionUpdate = () => {
                   }}
                   disabled={!isNew}
                 >
-                  <option value="" key="0">--- Seleccione una opción ---</option>
+                  <option value="" key="0"></option>
                   {stores
                     ? stores.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
@@ -171,7 +183,7 @@ export const ActionUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               >
-                <option value="" key="0">--- Seleccione una opción ---</option>
+                <option value="" key="0"></option>
                 {stocks
                   ? stocks.map(otherEntity => (
                     <option value={otherEntity.id} key={otherEntity.id}>
@@ -197,7 +209,7 @@ export const ActionUpdate = () => {
                   }}
                   disabled={!isNew}
                 >
-                <option value="" key="0">--- Seleccione una opción ---</option>
+                <option value="" key="0"></option>
                   {stores 
                     ? stores.filter(otherEntity=> otherEntity.id!=selectedStore).map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
@@ -224,6 +236,7 @@ export const ActionUpdate = () => {
                     ))
                   : null}
               </ValidatedField> */}
+              <br/>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -233,7 +246,9 @@ export const ActionUpdate = () => {
               </Button>
               &nbsp;
               <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
-                {translate('stockmanagerApp.action.home.actionType.' + actionType)}
+                <FontAwesomeIcon icon="save" />
+                &nbsp;
+                <Translate contentKey="entity.action.save">Save</Translate>
               </Button>
             </ValidatedForm>
           )}

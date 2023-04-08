@@ -7,7 +7,7 @@ import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.cons
 import React, { useEffect, useState } from 'react';
 import { getSortState, JhiItemCount, JhiPagination, Translate } from 'react-jhipster';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Table } from 'reactstrap';
+import { Button, Col, Row, Table } from 'reactstrap';
 import { getEntities } from './stock.reducer';
 
 export const Stock = () => {
@@ -37,10 +37,10 @@ export const Stock = () => {
 
   const sortEntities = () => {
     getAllEntities();
-    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
-    if (location.search !== endURL) {
-      navigate(`${location.pathname}${endURL}`);
-    }
+    // const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
+    // if (location.search !== endURL) {
+    //   navigate(`${location.pathname}${endURL}`);
+    // }
   };
 
   // useEffect(() => {
@@ -83,22 +83,25 @@ export const Stock = () => {
 
   return (
     <div>
-      <h2 id="stock-heading" data-cy="StockHeading">
-        <Translate contentKey="stockmanagerApp.stock.home.title">Stocks</Translate>
+      <h2 id="action-heading" data-cy="ActionHeading">
         <div className="d-flex justify-content-end">
-          {/* <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="stockmanagerApp.stock.home.refreshListLabel">Refresh List</Translate>
-          </Button> */}
-          <Link to="/stock/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+        <Link to="/stock/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
             &nbsp;
             <Translate contentKey="stockmanagerApp.stock.home.createLabel">Create new Stock</Translate>
           </Link>
         </div>
       </h2>
+      <br />
+      <Row className="justify-content-center">
+        <Col md="8">
+          <h2 className="text-center" id="stockmanagerApp.article.home.historyLabel" data-cy="ArticleCreateUpdateHeading">
+          <Translate contentKey="stockmanagerApp.stock.home.title">Stocks</Translate>
+          </h2>
+        </Col>
+      </Row>
+      <br />
       <FilterByStockAndArticle setCriteria={setCriteria} criteria={criteria}/>
-
       <br/>
       <div className="table-responsive">
         {stockList && stockList.length > 0 ? (

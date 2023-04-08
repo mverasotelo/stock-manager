@@ -62,4 +62,14 @@ public interface StockService {
      * @param pageable the pagination information.
      */
     Page<StockDTO> findTotalStocks(Pageable pageable);
+
+    /**
+     * Get one stock by article and store.
+     *     
+     * @param articleId the id of the article.
+     * @param storeId the id of the store.
+     * @return the entity.
+     */
+    public Optional<StockDTO> getByArticleAndStore(Long articleId, Long storeId);
+
 }

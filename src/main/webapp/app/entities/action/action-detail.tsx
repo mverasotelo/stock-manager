@@ -22,9 +22,11 @@ export const ActionDetail = () => {
   return (
     <Row>
       <Col md="8">
+        <br/>
         <h2 data-cy="actionDetailsHeading">
-          <Translate contentKey="stockmanagerApp.action.detail.title">Action</Translate>
+        <Translate contentKey="stockmanagerApp.action.detail.title" interpolate={{ type: actionEntity.type=="IN" ? "ingreso" : "egreso"}}/>  
         </h2>
+        <br/>
         <dl className="jh-entity-details">
           {/* <dt>
             <span id="id">
@@ -51,6 +53,14 @@ export const ActionDetail = () => {
           </dt>
           <dd> {translate('stockmanagerApp.action.actionType.' + actionEntity.type)}</dd>
           <dt>
+            <Translate contentKey="stockmanagerApp.store.detail.title">Store</Translate>
+          </dt>
+          <dd>{actionEntity.stock ? actionEntity.stock.store?.code : ''}</dd>
+          <dt>
+            <Translate contentKey="stockmanagerApp.action.stock">Article</Translate>
+          </dt>
+          <dd>{actionEntity.stock ? actionEntity.stock.article?.code + " - " + actionEntity.stock.article?.description : ''}</dd>
+          <dt>
             <span id="quantity">
               <Translate contentKey="stockmanagerApp.action.quantity">Quantity</Translate>
             </span>
@@ -60,14 +70,6 @@ export const ActionDetail = () => {
             <Translate contentKey="stockmanagerApp.action.employee">Employee</Translate>
           </dt> */}
           {/* <dd>{actionEntity.employee ? actionEntity.employee.id : ''}</dd> */}
-          <dt>
-            <Translate contentKey="stockmanagerApp.action.stock">Article</Translate>
-          </dt>
-          <dd>{actionEntity.stock ? actionEntity.stock.article?.code + " - " + actionEntity.stock.article?.description : ''}</dd>
-          <dt>
-            <Translate contentKey="stockmanagerApp.store.detail.title">Store</Translate>
-          </dt>
-          <dd>{actionEntity.stock ? actionEntity.stock.store?.code : ''}</dd>
         </dl>
         <Button tag={Link} to={"/action/type/"+actionEntity.type} replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

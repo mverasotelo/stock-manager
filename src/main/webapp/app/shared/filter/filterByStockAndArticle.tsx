@@ -4,9 +4,9 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntities as getStores } from 'app/entities/store/store.reducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from 'reactstrap';
+import PropTypes from 'prop-types';
 
-
-export const FilterByStockAndArticle = ({criteria, setCriteria}) => {
+export const FilterByStockAndArticle = ({criteria, setCriteria, onlyArticle}) => {
 
   const dispatch = useAppDispatch();
   
@@ -14,7 +14,6 @@ export const FilterByStockAndArticle = ({criteria, setCriteria}) => {
 
   const [searchText, setSearchText] = useState('');
   const [store, setStore] = useState('');
-  // const [criteria, setCriteria] = useState({storeId: {equals: store}, articleCode: {contains:searchText}, articleDescription: {contains:searchText}});
 
 
   useEffect(() => {
@@ -37,14 +36,21 @@ export const FilterByStockAndArticle = ({criteria, setCriteria}) => {
   };
 
   const search = () => {
-    setCriteria({ ...criteria, storeId: { equals: store }, articleCode: { contains: searchText }, articleDescription: { contains: searchText } });
+    if(!onlyArticle){
+      setCriteria({ ...criteria, storeId: { equals: store }, articleCode: { contains: searchText }, articleDescription: { contains: searchText } });
+    }else{
+      setCriteria({ ...criteria, articleCode: { contains: searchText }, articleDescription: { contains: searchText } });
+    }
   };
 
   const clear = () => {
     setStore('');
     setSearchText('');
-    // setCriteria({store: {equals: null}, article: {contains:''}});
-    setCriteria({ ...criteria, storeId: { equals: null }, articleCode: { contains: '' }, articleDescription: { contains: '' } });
+    if(!onlyArticle){
+      setCriteria({ ...criteria, storeId: { equals: null }, articleCode: { contains: '' }, articleDescription: { contains: '' } });
+    }else{
+      setCriteria({ ...criteria, articleCode: { contains: '' }, articleDescription: { contains: '' } });
+    }
   };
 
 
@@ -59,8 +65,8 @@ export const FilterByStockAndArticle = ({criteria, setCriteria}) => {
 
 
     return(
-      <ValidatedForm onSubmit={search}>
-        <ValidatedField id="stock-store" name="store" data-cy="store" label={translate('stockmanagerApp.stock.store')} type="select"
+      <ValidatedForm className="bg-light p-3 rounded" onSubmit={search}>
+        {!onlyArticle ? <ValidatedField id="stock-store" name="store" data-cy="store" label={translate('stockmanagerApp.stock.store')} type="select"
           value={store}
           onChange={handleSelect}
         >
@@ -73,13 +79,14 @@ export const FilterByStockAndArticle = ({criteria, setCriteria}) => {
             ))
             : null}
         </ValidatedField>
+        : null}
         <ValidatedField
           id="stock-article"
           name="article"
           data-cy="article"
           value={searchText}
           onChange={handleChange}
-          label={translate('stockmanagerApp.article.detail.title')}
+          label={!onlyArticle ? translate('stockmanagerApp.article.detail.title'):''}
           type="text"
         >
         </ValidatedField>
@@ -92,5 +99,13 @@ export const FilterByStockAndArticle = ({criteria, setCriteria}) => {
       </ValidatedForm>
     )
 };
+
+FilterByStockAndArticle.defaultProps = {
+	onlyArticle: false
+}
+
+FilterByStockAndArticle.propTypes = {
+	onlyArticle: PropTypes.bool
+}
 
 export default FilterByStockAndArticle;

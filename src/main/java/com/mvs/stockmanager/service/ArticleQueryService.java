@@ -81,41 +81,17 @@ public class ArticleQueryService extends QueryService<Article> {
 		if (criteria != null)
 		{
 			// specification = specification.and((root, query, criteriaBuilder) -> criteriaBuilder.isNull(root.get("fechaBaja")));
-
-			if (criteria.getDescription() != null) {
-				specification = specification
-						.and(likeDescription(criteria.getDescription(), "description"));
-			}
-
-			if (criteria.getCode() != null) {
-				specification = specification.or(likeCode(criteria.getCode(), "code"));
-			}
+            if (criteria.getArticleCode() != null || criteria.getArticleDescription() != null) {
+                specification = specification.and(
+                    Specification.where(
+                        buildSpecification(criteria.getArticleCode(), root -> root.get(Article_.code))
+                    ).or(
+                        buildSpecification(criteria.getArticleDescription(), root -> root.get(Article_.description))
+                    )
+                );
+            }    
 		}
 		return specification;
 	}
 
-	private Specification<Article> likeDescription(String description, String field){
-		return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(field), "%"+description.toUpperCase()+"%");
-	}
-
-	private Specification<Article> likeCode(String code, String field){
-		return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(field), "%"+code.toUpperCase()+"%");
-	}
-
-        /**
-     * Function to convert a {@link ArticleCriteria}
-     * 
-     * @param article The filter text
-     * @return the ArticleCriteria object.
-     */
-    public ArticleCriteria convertToCriteriaObject(String article) {
-        ArticleCriteria criteria = new ArticleCriteria();
-        if(article != null && !article.isEmpty()){
-            StringFilter articleCodeFilter = new StringFilter();
-            articleCodeFilter.setContains(article);
-            criteria.setCode(article);
-            criteria.setDescription(article);
-        }
-        return criteria;
-    }
 }

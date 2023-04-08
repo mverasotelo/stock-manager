@@ -1,6 +1,9 @@
 package com.mvs.stockmanager.service;
 
+import com.mvs.stockmanager.service.dto.ActionDTO;
 import com.mvs.stockmanager.service.dto.AlertDTO;
+import com.mvs.stockmanager.service.dto.StockDTO;
+
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,4 +66,21 @@ public interface AlertService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Creates a alert according to a stock.
+     *
+     * @param stockDTO the stock to create an alert about.
+     * @return the persisted entity.
+     */
+    public AlertDTO createAlert(StockDTO stockDTO);
+
+    /**
+     * Rectificates an alert according to a stock.
+     *
+     * @param stockDTO the stock to rectificate an alert about.
+     * @return the rectificated entity.
+     */
+    public AlertDTO rectificateAlert(StockDTO stockDTO);
+
 }

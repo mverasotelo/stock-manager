@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { getSortState, JhiItemCount, JhiPagination, TextFormat, Translate } from 'react-jhipster';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Table } from 'reactstrap';
+import { Button, Col, Row, Table } from 'reactstrap';
 import { APP_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
@@ -21,7 +21,7 @@ export const Alert = () => {
   
   const [active, setActive] = useState(true);
   const [paginationState, setPaginationState] = useState(
-    overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'id'), location.search)
+    overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'datetime', 'DESC'), location.search)
   );
   const [criteria, setCriteria] = useState({isActive:true});
 
@@ -38,10 +38,10 @@ export const Alert = () => {
 
   const sortEntities = () => {
     getAllEntities();
-    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
-    if (location.search !== endURL) {
-      navigate(`${location.pathname}${endURL}`);
-    }
+    // const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
+    // if (location.search !== endURL) {
+    //   navigate(`${location.pathname}${endURL}`);
+    // }
   };
 
   useEffect(() => {
@@ -85,10 +85,9 @@ export const Alert = () => {
 
   return (
     <div>
-      <h2 id="alert-heading" data-cy="AlertHeading">
-        <Translate contentKey="stockmanagerApp.alert.home.title">Alerts</Translate>
+      <h2 id="action-heading" data-cy="AlertHeading">
         <div className="d-flex justify-content-end">
-          {active ?
+        {active ?
             <Button className="me-2" color="primary" onClick={toggleHistory}>
               <Translate contentKey="stockmanagerApp.alert.home.history"></Translate>
             </Button>
@@ -99,6 +98,15 @@ export const Alert = () => {
           }
         </div>
       </h2>
+      <br />
+      <Row className="justify-content-center">
+        <Col md="8">
+          <h2 className="text-center" id="stockmanagerApp.article.home.historyLabel" data-cy="ArticleCreateUpdateHeading">
+          <Translate contentKey="stockmanagerApp.alert.home.title">Alerts</Translate>
+          </h2>
+        </Col>
+      </Row>
+      <br />
       <FilterByStockAndArticle setCriteria={setCriteria} criteria={criteria}/>
       <br/>
       <div className="table-responsive">

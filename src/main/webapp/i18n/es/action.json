@@ -6,11 +6,12 @@
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo Action",
         "createOrEditLabel": "Crear o editar Action",
+        "historyLabel": "Ver historial de {{type}}",
         "notFound": "No se encontaron movimientos",
         "actionType": {
           "null": "",
-          "IN": "Ingreso de stock",
-          "OUT": "Egreso de stock"
+          "IN": "Nuevo ingreso de stock",
+          "OUT": "Nuevo egreso de stock"
         },
         "history": {
           "IN": "Ingresos de stock",
@@ -24,12 +25,12 @@
         "question": "¿Seguro que quiere eliminar el movimiento {{ id }}?"
       },
       "detail": {
-        "title": "Movimiento"
+        "title": "Detalle del {{type}}"
       },
       "id": "ID",
       "datetime": "Fecha",
       "type": "Tipo de movimiento",
-      "quantity": "Cantidad",
+      "quantity": "Unidades",
       "employee": "Empleado",
       "stock": "Artículo",
       "code": "Código",

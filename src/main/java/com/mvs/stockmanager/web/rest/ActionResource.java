@@ -33,12 +33,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mvs.stockmanager.domain.enumeration.ActionType;
+import com.mvs.stockmanager.domain.enumeration.AlertType;
 import com.mvs.stockmanager.repository.ActionRepository;
 import com.mvs.stockmanager.service.ActionQueryService;
 import com.mvs.stockmanager.service.ActionService;
+import com.mvs.stockmanager.service.AlertService;
 import com.mvs.stockmanager.service.StockService;
 import com.mvs.stockmanager.service.criteria.ActionCriteria;
 import com.mvs.stockmanager.service.dto.ActionDTO;
+import com.mvs.stockmanager.service.dto.AlertDTO;
 import com.mvs.stockmanager.service.dto.StockDTO;
 import com.mvs.stockmanager.web.rest.errors.BadRequestAlertException;
 
@@ -68,11 +71,15 @@ public class ActionResource {
 
     private final StockService stockService;
 
-    public ActionResource(ActionService actionService, ActionRepository actionRepository, ActionQueryService actionQueryService, StockService stockService) {
+    private final AlertService alertService;
+
+
+    public ActionResource(ActionService actionService, ActionRepository actionRepository, ActionQueryService actionQueryService, StockService stockService, AlertService alertService) {
         this.actionService = actionService;
         this.actionRepository = actionRepository;
         this.actionQueryService = actionQueryService;     
         this.stockService = stockService;
+        this.alertService = alertService;
     }
 
     /**
@@ -107,9 +114,20 @@ public class ActionResource {
             throw new BadRequestAlertException("Not enough store capacity", ENTITY_NAME, "notenoughcapacity");
         }
 
-        //Modify stocks
-        stockDTO.setActualStock(actionDTO.getType() == ActionType.OUT? stockDTO.getActualStock() - actionDTO.getQuantity() : stockDTO.getActualStock() + actionDTO.getQuantity());
+        // Modify stocks
+        stockDTO.setActualStock(
+                actionDTO.getType() == ActionType.OUT ? stockDTO.getActualStock() - actionDTO.getQuantity()
+                        : stockDTO.getActualStock() + actionDTO.getQuantity());
         stockService.update(stockDTO);
+
+        // Generate alert if needed
+        if (actionDTO.getType() == ActionType.OUT && stockDTO.getActualStock() <= stockDTO.getReorderPoint()) {
+            alertService.createAlert(stockDTO);
+            // Check if an alert is being rectificated
+        }
+        else if (actionDTO.getType() == ActionType.IN) {
+            alertService.rectificateAlert(stockDTO);
+        }
 
         actionDTO.setDatetime(Instant.now());
         ActionDTO result = actionService.save(actionDTO);

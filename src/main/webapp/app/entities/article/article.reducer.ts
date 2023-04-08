@@ -18,11 +18,11 @@ const initialState: EntityState<IArticle> = {
 const apiUrl = 'api/articles';
 
 // Actions
-export const getEntities = createAsyncThunk('article/fetch_entity_list', async ({ page, size, sort, article}: any) => {
+export const getEntities = createAsyncThunk('article/fetch_entity_list', async ({ page, size, sort, criteria}: any) => {
   // const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
 
 const cacheBuster = new Date().getTime();
-return axios.get<IArticle[]>(apiUrl, {params: { page, size, sort, article }});
+return axios.get<IArticle[]>(apiUrl, {params: { page, size, sort, criteria }});
 // return axios.get<IArticle[]>(requestUrl);
 });
 

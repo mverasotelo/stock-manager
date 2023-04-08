@@ -6,13 +6,11 @@ import { Button, Table } from 'reactstrap';
 
 import { APP_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
+import FilterByStockAndArticle from 'app/shared/filter/filterByStockAndArticle';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import PropTypes from 'prop-types';
 import { getEntities } from './action.reducer';
-import { ActionCriteria } from 'app/shared/model/action.model';
-import { ActionType } from 'app/shared/model/enumerations/action-type.model';
-import FilterByStockAndArticle from 'app/shared/filter/filterByStockAndArticle';
 
 export const Action = () => {
   const dispatch = useAppDispatch();
@@ -22,7 +20,7 @@ export const Action = () => {
   const { actionType } = useParams();
 
   const [paginationState, setPaginationState] = useState(
-    overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'id'), location.search)
+    overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'datetime', 'DESC'), location.search)
   );
   const [criteria, setCriteria] = useState({type: {equals: actionType}});
 
@@ -44,19 +42,20 @@ export const Action = () => {
   const sortEntities = () => {
     getAllEntities();
     const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
-    if (location.search !== endURL) {
-      navigate(`${location.pathname}${endURL}`);
-    }
+    // if (location.search !== endURL) {
+    //   navigate(`${location.pathname}${endURL}`);
+    // }
   };
 
-  useEffect(() => {
-    getAllEntities();
-  }, [criteria]);
+  // useEffect(() => {
+  //   // getAllEntities();
+  //   sortEntities();
+  // }, [criteria]);
 
 
   useEffect(() => {
     sortEntities();
-  }, [paginationState.activePage, paginationState.order, paginationState.sort]);
+  }, [paginationState.activePage, paginationState.order, paginationState.sort, criteria]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -94,7 +93,7 @@ export const Action = () => {
   return (
     <div>
       <br/><br/>
-      <h2 id="action-heading" data-cy="ActionHeading">
+      <h2 id="action-heading" className="text-center" data-cy="ActionHeading">
         {translate("stockmanagerApp.action.home.history."+actionType)}
         <br/><br/>
         <div className="d-flex justify-content-end">
@@ -125,19 +124,19 @@ export const Action = () => {
                 <th className="hand" onClick={sort('datetime')}>
                   <Translate contentKey="stockmanagerApp.action.datetime">Datetime</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('type')}>
+                {/* <th className="hand" onClick={sort('type')}>
                   <Translate contentKey="stockmanagerApp.action.type">Type</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
+                </th> */}
                 <th className="hand" onClick={sort('quantity')}>
                   <Translate contentKey="stockmanagerApp.action.quantity">Quantity</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 {/* <th>
                   <Translate contentKey="stockmanagerApp.action.employee">Employee</Translate> <FontAwesomeIcon icon="sort" />
                 </th> */}
-                <th>
+                <th className="hand" onClick={sort('stock.article.code')}>
                   <Translate contentKey="stockmanagerApp.action.stock">Stock</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
+                <th className="hand" onClick={sort('stock.store.code')}>
                   <Translate contentKey="stockmanagerApp.store.detail.title">Store</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
@@ -153,9 +152,9 @@ export const Action = () => {
                   </td> */}
                   <td>{action.code}</td>
                   <td>{action.datetime ? <TextFormat type="date" value={action.datetime} format={APP_DATE_FORMAT} /> : null}</td>
-                  <td>
+                  {/* <td>
                   {translate('stockmanagerApp.action.actionType.' + action.type)}
-                  </td>
+                  </td> */}
                   <td>{action.quantity}</td>
                   {/* <td>{action.employee ? <Link to={`/employee/${action.employee.id}`}>{action.employee.id}</Link> : ''}</td> */}
                   <td>{action.stock ? <Link to={`/article/${action.stock?.article?.id}`}>{action.stock?.article?.code}</Link> : ''}</td>
@@ -206,6 +205,7 @@ export const Action = () => {
           )
         )}
       </div>
+      <br/>
       {totalItems ? (
         <div className={actionList && actionList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">

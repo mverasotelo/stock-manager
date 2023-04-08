@@ -22,15 +22,15 @@ public class ArticleCriteria implements Serializable, Criteria {
 
     private static final long serialVersionUID = 1L;
 
-    private String code;
+    private StringFilter articleCode;
 
-    private String description;
+    private StringFilter articleDescription;
 
     public ArticleCriteria() {}
 
     public ArticleCriteria(ArticleCriteria other) {
-        this.code = other.code == null ? null : other.code;
-        this.description = other.description == null ? null : other.description;
+        this.articleCode = other.articleCode == null ? null : other.articleCode;
+        this.articleDescription = other.articleDescription == null ? null : other.articleDescription;
     }
 
     @Override
@@ -38,28 +38,28 @@ public class ArticleCriteria implements Serializable, Criteria {
         return new ArticleCriteria(this);
     }
 
-    public String getCode() {
-        return code;
+    public StringFilter getArticleCode() {
+        return articleCode;
     }
 
-    public String code() {
-        return code;
+    public StringFilter articleCode() {
+        return articleCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setArticleCode(StringFilter articleCode) {
+        this.articleCode = articleCode;
     }
 
-    public String getDescription() {
-        return description;
+    public StringFilter getArticleDescription() {
+        return articleDescription;
     }
 
-    public String description() {
-        return description;
+    public StringFilter articleDescription() {
+        return articleDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setArticleDescription(StringFilter articleDescription) {
+        this.articleDescription = articleDescription;
     }
 
 
@@ -73,22 +73,22 @@ public class ArticleCriteria implements Serializable, Criteria {
         }
         final ArticleCriteria that = (ArticleCriteria) o;
         return (
-            Objects.equals(code, that.code) &&
-            Objects.equals(description, that.description) 
+            Objects.equals(articleCode, that.articleCode) &&
+            Objects.equals(articleDescription, that.articleDescription) 
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(code, description);
+        return Objects.hash(articleCode, articleDescription);
     }
 
     // prettier-ignore
     @Override
     public String toString() {
         return "ArticleCriteria{" +
-            (code != null ? "code=" + code + ", " : "") +
-            (description != null ? "description=" + description + ", " : "") +
+            (articleCode != null ? "code=" + articleCode + ", " : "") +
+            (articleDescription != null ? "description=" + articleDescription + ", " : "") +
             "}";
     }
 }

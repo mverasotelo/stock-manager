@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Table } from 'reactstrap';
+import { Button, Col, Row, Table } from 'reactstrap';
 import { Translate, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -10,6 +10,7 @@ import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-u
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntities } from './article.reducer';
+import FilterByStockAndArticle from 'app/shared/filter/filterByStockAndArticle';
 
 export const Article = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +22,7 @@ export const Article = () => {
     overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'id'), location.search)
   );
   const [searchText, setSearchText] = useState('');
-  const [article, setArticle] = useState('');
+  const [criteria, setCriteria] = useState({});
 
   const articleList = useAppSelector(state => state.article.entities);
   const loading = useAppSelector(state => state.article.loading);
@@ -33,24 +34,24 @@ export const Article = () => {
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
         sort: `${paginationState.sort},${paginationState.order}`,
-        article
+        criteria
       })
     );
   };
 
   useEffect(() => {
-    if (article!=null) {
+    if (criteria!=null) {
       getAllEntities();
     } 
-  }, [article, paginationState.activePage]);
+  }, [criteria, paginationState.activePage]);
 
 
   const sortEntities = () => {
     getAllEntities();
-    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
-    if (location.search !== endURL) {
-      navigate(`${location.pathname}${endURL}`);
-    }
+    // const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
+    // if (location.search !== endURL) {
+    //   navigate(`${location.pathname}${endURL}`);
+    // }
   };
 
   useEffect(() => {
@@ -87,59 +88,64 @@ export const Article = () => {
     });
 
 
-  const handleChange = event => {
-    setSearchText(event.target.value);
-  };
+  // const handleChange = event => {
+  //   setSearchText(event.target.value);
+  // };
 
-  const pressEnter = event => {
-    if (event.keyCode == 13) {
-      search();
-    }
-  };
+  // const pressEnter = event => {
+  //   if (event.keyCode == 13) {
+  //     search();
+  //   }
+  // };
 
-  const search = () => {
-    setArticle(searchText);
-  };
+  // const search = () => {
+  //   setCriteria(searchText);
+  // };
 
-  const clear = () => {
-    setSearchText('');
-    setArticle('');
-  };
+  // const clear = () => {
+  //   setSearchText('');
+  //   setCriteria('');
+  // };
 
 
-  let clearButton;
-  if (searchText != '') {
-    clearButton = <button className="btn btn-danger btn-sm" onClick={clear}>
-      <FontAwesomeIcon icon="trash" />
-    </button>;
-  } else {
-    clearButton = null;
-  }
+  // let clearButton;
+  // if (searchText != '') {
+  //   clearButton = <button className="btn btn-danger btn-sm" onClick={clear}>
+  //     <FontAwesomeIcon icon="trash" />
+  //   </button>;
+  // } else {
+  //   clearButton = null;
+  // }
   
 
   return (
     <div>
-      <h2 id="article-heading" data-cy="ArticleHeading">
-        <Translate contentKey="stockmanagerApp.article.home.title">Articles</Translate>
+      <h2 id="action-heading" data-cy="ActionHeading">
         <div className="d-flex justify-content-end">
-          {/* <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="stockmanagerApp.article.home.refreshListLabel">Refresh List</Translate>
-          </Button> */}
-          <Link to="/article/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+        <Link to="/article/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
             &nbsp;
             <Translate contentKey="stockmanagerApp.article.home.createLabel">Create new Article</Translate>
           </Link>
         </div>
       </h2>
-      <div className="d-flex justify-content-left">
+      <br />
+      <Row className="justify-content-center">
+        <Col md="8">
+          <h2 className="text-center" id="stockmanagerApp.article.home.historyLabel" data-cy="ArticleCreateUpdateHeading">
+          <Translate contentKey="stockmanagerApp.article.home.title">Articles</Translate>
+          </h2>
+        </Col>
+      </Row>
+      <br />
+      <FilterByStockAndArticle setCriteria={setCriteria} criteria={criteria} onlyArticle/>
+      {/* <div className="d-flex justify-content-left">
           <label><input type="text" value={searchText} className="form-control form-control-sm" placeholder="Buscar..." onChange={handleChange} onKeyUp={pressEnter}></input></label>
           <Button className="btn btn-info btn-sm" onClick={search}>
             <FontAwesomeIcon icon="search" />
           </Button>
           <div>{clearButton}</div>
-        </div>
+        </div> */}
       <br></br><br></br>      <div className="table-responsive">
         {articleList && articleList.length > 0 ? (
           <Table responsive>

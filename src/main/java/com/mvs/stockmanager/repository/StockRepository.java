@@ -3,6 +3,8 @@ package com.mvs.stockmanager.repository;
 import com.mvs.stockmanager.domain.Stock;
 import com.mvs.stockmanager.service.criteria.StockCriteria;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -19,4 +21,6 @@ public interface StockRepository extends JpaRepository<Stock, Long>, JpaSpecific
     Page<Stock> findTotalStocksByArticle(Pageable page);
 
     Boolean existsByArticleIdAndStoreId(Long articleId, Long storeId);
+
+    Optional<Stock> getByArticleIdAndStoreId(Long articleId, Long storeId);
 }

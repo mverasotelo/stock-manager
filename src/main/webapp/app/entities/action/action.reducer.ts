@@ -21,7 +21,8 @@ const apiUrl = 'api/actions';
 
 export const getEntities = createAsyncThunk('action/fetch_entity_list', async ({ page, size, sort, criteria}: any) => {
   // const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
-  return axios.get<IAction[]>(apiUrl, {params: {criteria, page, size, sort}});
+  const cacheBuster = new Date().getTime();
+  return axios.get<IAction[]>(apiUrl, {params: {criteria, page, size, sort, cacheBuster}});
   // return axios.get<IAction[]>(requestUrl);
 });
 

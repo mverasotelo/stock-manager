@@ -87,4 +87,10 @@ public class StockServiceImpl implements StockService {
         log.debug("Request to find total stocks");
         return stockRepository.findTotalStocksByArticle(pageable).map(stockMapper::toDto);
     }
+
+    @Override
+    public Optional<StockDTO> getByArticleAndStore(Long articleId, Long storeId) {
+        log.debug("Request to find one stock by article {} and store {}", articleId, storeId);
+        return stockRepository.getByArticleIdAndStoreId(articleId, storeId).map(stockMapper::toDto);
+    }
 }
