@@ -22,7 +22,7 @@ export const getEntities = createAsyncThunk('article/fetch_entity_list', async (
   // const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
 
 const cacheBuster = new Date().getTime();
-return axios.get<IArticle[]>(apiUrl, {params: { page, size, sort, criteria }});
+return axios.get<IArticle[]>(apiUrl, {params: { criteria, page, size, sort, cacheBuster }});
 // return axios.get<IArticle[]>(requestUrl);
 });
 

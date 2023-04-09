@@ -35,6 +35,7 @@
       "stock": "Artículo",
       "code": "Código",
       "destinationStore": "Almacén de destino",
+      "destination": "Destino",
       "actionType": {
         "null": "",
         "IN": "Entrada",

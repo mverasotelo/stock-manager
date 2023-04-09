@@ -87,6 +87,18 @@ public class AlertQueryService extends QueryService<Alert> {
             if (criteria.getDistinct() != null) {
                 specification = specification.and(distinct(criteria.getDistinct()));
             }
+            if (criteria.getIsActive() != null) {
+                specification =
+                    specification.and(
+                        (root, query, criteriaBuilder) -> {
+                            if (criteria.getIsActive()) {
+                                return criteriaBuilder.isNull(root.get(Alert_.rectificationDatetime));
+                            } else {
+                                return criteriaBuilder.isNotNull(root.get(Alert_.rectificationDatetime));
+                            }
+                        }
+                    );
+            }
             if (criteria.getId() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), Alert_.id));
             }
@@ -122,19 +134,6 @@ public class AlertQueryService extends QueryService<Alert> {
                         buildSpecification(criteria.getArticleDescription(), root -> root.join(Alert_.stock, JoinType.LEFT).join(Stock_.article, JoinType.LEFT).get(Article_.description))
                     )
                 );
-            }
-            if (criteria.getIsActive() != null) {
-                specification =
-                    specification.and(
-                        (root, query, criteriaBuilder) -> {
-                            if (criteria.getIsActive()) {
-                                return criteriaBuilder.isNull(root.get(Alert_.rectificationDatetime));
-                            } else {
-                                return criteriaBuilder.isNotNull(root.get(Alert_.rectificationDatetime));
-                            }
-                        }
-                        // buildSpecification(criteria.getStoreId(), root -> root.join(Alert_.stock, JoinType.LEFT).join(Stock_.store, JoinType.LEFT).get(Store_.id))
-                    );
             }
         }
         return specification;

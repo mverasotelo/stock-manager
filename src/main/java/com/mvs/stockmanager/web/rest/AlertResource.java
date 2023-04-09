@@ -152,7 +152,7 @@ public class AlertResource {
      */
     @GetMapping("/alerts")
     public ResponseEntity<List<AlertDTO>> getAllAlerts(
-        String criteria,
+        @RequestParam String criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable)
         throws JsonMappingException, JsonProcessingException {
 

@@ -1,29 +1,33 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { getSortState, JhiItemCount, JhiPagination, TextFormat, Translate } from 'react-jhipster';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { getSortState, JhiItemCount, JhiPagination, TextFormat, Translate, translate } from 'react-jhipster';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
+
 import { APP_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
+import FilterByStockAndArticle from 'app/shared/filter/filterByStockAndArticle';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
+import PropTypes from 'prop-types';
+import { getEntities } from './alert.reducer';
 
-import FilterByStockAndArticle from 'app/shared/filter/filterByStockAndArticle';
-import { getEntities, reset } from './alert.reducer';
-
-export const Alert = () => {
+export const Action = () => {
   const dispatch = useAppDispatch();
+
   const location = useLocation();
-  const navigate = useNavigate();  
-  const alertList = useAppSelector(state => state.alert.entities);
-  const loading = useAppSelector(state => state.alert.loading);
-  const totalItems = useAppSelector(state => state.alert.totalItems);
-  
-  const [active, setActive] = useState(true);
+  const navigate = useNavigate();
+  const { alert } = useParams();
+  let isActive = "active" ? true: false;  
+
   const [paginationState, setPaginationState] = useState(
     overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'datetime', 'DESC'), location.search)
   );
-  const [criteria, setCriteria] = useState({isActive:true});
+  const [criteria, setCriteria] = useState({isActive});
+
+  const alertList = useAppSelector(state => state.alert.entities);
+  const loading = useAppSelector(state => state.alert.loading);
+  const totalItems = useAppSelector(state => state.alert.totalItems);
 
   const getAllEntities = () => {
     dispatch(
@@ -44,9 +48,15 @@ export const Alert = () => {
     // }
   };
 
+  // useEffect(() => {
+  //   // getAllEntities();
+  //   sortEntities();
+  // }, [criteria]);
+
+
   useEffect(() => {
     sortEntities();
-  }, [paginationState.activePage, paginationState.order, paginationState.sort,criteria]);
+  }, [paginationState.activePage, paginationState.order, paginationState.sort, criteria]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -71,30 +81,31 @@ export const Alert = () => {
     });
   };
 
-  const handlePagination = currentPage => 
-  setPaginationState({
-    ...paginationState,
-    activePage: currentPage,
-  });
+  const handlePagination = currentPage =>
+    setPaginationState({
+      ...paginationState,
+      activePage: currentPage,
+    });
 
-  const toggleHistory = () => {
-    active ?  setCriteria({...criteria, isActive:false}) :  setCriteria({...criteria, isActive:true});
-    active == true ?  setActive(false) :  setActive(true);
-  };
+  // const handleSyncList = () => {
+  //   sortEntities();
+  // };
 
-
+  
   return (
     <div>
       <h2 id="action-heading" data-cy="AlertHeading">
         <div className="d-flex justify-content-end">
-        {active ?
-            <Button className="me-2" color="primary" onClick={toggleHistory}>
-              <Translate contentKey="stockmanagerApp.alert.home.history"></Translate>
-            </Button>
+          {isActive ?
+            <Link to="/history/list" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+                Mostrar alertas activas            
+            </Link>
             :
-            <Button className="me-2" color="primary" onClick={toggleHistory}>
+            <Link to="/active/list" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+              <FontAwesomeIcon icon="plus" />
+              &nbsp;
               Mostrar alertas activas
-            </Button>
+            </Link>
           }
         </div>
       </h2>
@@ -102,13 +113,16 @@ export const Alert = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 className="text-center" id="stockmanagerApp.article.home.historyLabel" data-cy="ArticleCreateUpdateHeading">
-          <Translate contentKey={active ? "stockmanagerApp.alert.home.title.active" : "stockmanagerApp.alert.home.title.history"}>Alerts</Translate>
+            {isActive ?
+              <Translate contentKey="stockmanagerApp.alert.home.title.active">Alerts</Translate> :
+              "Historial de alertas"
+            }
           </h2>
         </Col>
       </Row>
       <br />
-      <FilterByStockAndArticle setCriteria={setCriteria} criteria={criteria}/>
-      <br/>
+      <FilterByStockAndArticle setCriteria={setCriteria} criteria={criteria} />
+      <br />
       <div className="table-responsive">
         {alertList && alertList.length > 0 ? (
           <Table responsive>
@@ -129,7 +143,7 @@ export const Alert = () => {
                 <th className="hand" onClick={sort('type')}>
                   <Translate contentKey="stockmanagerApp.alert.type">Type</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                {!active ? (
+                {!isActive ? (
                   <th className="hand" onClick={sort('rectificationDatetime')}>
                     <Translate contentKey="stockmanagerApp.alert.rectificationDatetime">Rectification Datetime</Translate>{' '}
                     <FontAwesomeIcon icon="sort" />
@@ -152,7 +166,7 @@ export const Alert = () => {
                   <td>
                     <Translate contentKey={`stockmanagerApp.alert.AlertType.${alert.type}`} />
                   </td>
-                  {!active ? (
+                  {!isActive ? (
                     <td>
                       <TextFormat type="date" value={alert.rectificationDatetime ? alert.rectificationDatetime : "No subsanada"} format={APP_DATE_FORMAT} />
                     </td>
@@ -165,18 +179,6 @@ export const Alert = () => {
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
                       </Button>
-                      {/* <Button tag={Link} to={`/alert/${alert.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
-                          <FontAwesomeIcon icon="pencil-alt" />{' '}
-                          <span className="d-none d-md-inline">
-                            <Translate contentKey="entity.action.edit">Edit</Translate>
-                          </span>
-                        </Button>
-                        <Button tag={Link} to={`/alert/${alert.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
-                          <FontAwesomeIcon icon="trash" />{' '}
-                          <span className="d-none d-md-inline">
-                            <Translate contentKey="entity.action.delete">Delete</Translate>
-                          </span>
-                        </Button> */}
                     </div>
                   </td>
                 </tr>

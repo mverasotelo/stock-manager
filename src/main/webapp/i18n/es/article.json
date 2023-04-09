@@ -5,7 +5,7 @@
         "title": "Artículos",
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Agregar artículo",
-        "createOrEditLabel": "Crear o editar artículo",
+        "editLabel": "Editar artículo",
         "notFound": "No se han encontrado artículos"
       },
       "created": "Se ha creado el artículo {{ param }}",

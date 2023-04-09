@@ -43,13 +43,9 @@ export const Stock = () => {
     // }
   };
 
-  // useEffect(() => {
-  //   getAllEntities();
-  // }, [criteria]);
-
   useEffect(() => {
     sortEntities();
-  }, [paginationState.activePage, paginationState.order, paginationState.sort,criteria]);
+  }, [paginationState.activePage, paginationState.order, paginationState.sort, criteria]);
 
 
   useEffect(() => {
@@ -123,6 +119,9 @@ export const Stock = () => {
                 <th className="hand" onClick={sort('actualStock')}>
                   <Translate contentKey="stockmanagerApp.stock.actualStock">Actual Stock</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('isUnderReorderPoint')}>
+                  <Translate contentKey="stockmanagerApp.stock.status">Status</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 {/* <th className="hand" onClick={sort('reorderPoint')}>
                     <Translate contentKey="stockmanagerApp.stock.reorderPoint">Reorder Point</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -147,7 +146,9 @@ export const Stock = () => {
                   <td>{stock.article?.code}</td>
                   <td>{stock.article?.description}</td>
                   <td>{stock.store ? stock.store.code : '-'}</td>
-                  <td><FontAwesomeIcon icon={faCircle} color={stock.actualStock <= stock.reorderPoint ? "red" : "green"} />{" " + stock.actualStock}</td>
+                  <td>{stock.actualStock}</td>
+                  <td><FontAwesomeIcon icon={faCircle} color={stock.isUnderReorderPoint ? "red" : "green"} /></td>
+
                   {/* <td>{stock.reorderPoint}</td>
                     <td>{stock.maxStock}</td> */}
                   {/* <td>{stock.rack + "-" + stock.level +"-" +stock.section}</td> */}

@@ -26,7 +26,8 @@
       "rack": "Estantería",
       "level": "Nivel",
       "store": "Almacén",
-      "articleCode": "Código Producto"
+      "articleCode": "Código Producto",
+      "status": "Estado"
     }
   }
 }

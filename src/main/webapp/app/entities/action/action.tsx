@@ -139,6 +139,10 @@ export const Action = () => {
                 <th className="hand" onClick={sort('stock.store.code')}>
                   <Translate contentKey="stockmanagerApp.store.detail.title">Store</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                {actionType =="OUT" ? <th className="hand" onClick={sort('store.code')}>
+                  <Translate contentKey="stockmanagerApp.action.destination">Destination Store</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                :null}
                 <th />
               </tr>
             </thead>
@@ -158,7 +162,8 @@ export const Action = () => {
                   <td>{action.quantity}</td>
                   {/* <td>{action.employee ? <Link to={`/employee/${action.employee.id}`}>{action.employee.id}</Link> : ''}</td> */}
                   <td>{action.stock ? <Link to={`/article/${action.stock?.article?.id}`}>{action.stock?.article?.code}</Link> : ''}</td>
-                  <td>{action.store ? action.store.code : ''}</td>
+                  <td>{action.stock ? action.stock?.store?.code : ''}</td>
+                  {actionType == "OUT" ? <td>{action.store ? action.store?.code : ''}</td> : null}
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/action/${action.id}`} color="info" size="sm" data-cy="entityDetailsButton">
@@ -167,30 +172,6 @@ export const Action = () => {
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
                       </Button>
-                      {/* <Button
-                        tag={Link}
-                        to={`/action/${action.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="primary"
-                        size="sm"
-                        data-cy="entityEditButton"
-                      >
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`/action/${action.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="danger"
-                        size="sm"
-                        data-cy="entityDeleteButton"
-                      >
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
-                      </Button> */}
                     </div>
                   </td>
                 </tr>

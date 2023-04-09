@@ -70,16 +70,17 @@ export const ArticleUpdate = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="stockmanagerApp.article.home.createOrEditLabel" data-cy="ArticleCreateUpdateHeading">
-            <Translate contentKey="stockmanagerApp.article.home.createOrEditLabel">Create or edit a Article</Translate>
+            <Translate contentKey={isNew ? "stockmanagerApp.article.home.createLabel"  : "stockmanagerApp.article.home.editLabel" }>Create or edit a Article</Translate>
           </h2>
         </Col>
       </Row>
+      <br/>
       <Row className="justify-content-center">
         <Col md="8">
           {loading ? (
             <p>Loading...</p>
           ) : (
-            <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
+            <ValidatedForm className="bg-light p-3 rounded"  defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? (
                 <ValidatedField
                   name="id"

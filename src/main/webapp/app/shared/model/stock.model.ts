@@ -15,6 +15,7 @@ export interface IStock {
   actions?: IAction[] | null;
   article?: IArticle | null;
   store?: IStore | null;
+  isUnderReorderPoint?: boolean | null;
 }
 
 export const defaultValue: Readonly<IStock> = {};

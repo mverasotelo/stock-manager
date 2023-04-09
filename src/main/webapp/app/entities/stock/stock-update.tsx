@@ -38,9 +38,8 @@ export const StockUpdate = () => {
     if (!isNew) {
       dispatch(getEntity(id));
     }
-
-    dispatch(getArticles({size:2000}));
-    dispatch(getStores({}));
+    dispatch(getStores({size:200}));
+    dispatch(getArticles({size:2000, criteria:{}}));
   }, []);
 
   useEffect(() => {
@@ -82,12 +81,13 @@ export const StockUpdate = () => {
           </h2>
         </Col>
       </Row>
+      <br/>
       <Row className="justify-content-center">
         <Col md="8">
           {loading ? (
             <p>Loading...</p>
           ) : (
-            <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
+            <ValidatedForm className="bg-light p-3 rounded" defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? (
                 <ValidatedField
                   name="id"

@@ -128,7 +128,8 @@ public class ActionQueryService extends QueryService<Action> {
                         buildSpecification(criteria.getArticleDescription(), root -> root.join(Action_.stock, JoinType.LEFT).join(Stock_.article, JoinType.LEFT).get(Article_.description))
                     )
                 );
-            }        }
+            }        
+        }
         return specification;
     }
 }

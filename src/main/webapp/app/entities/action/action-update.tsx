@@ -11,7 +11,6 @@ import { getEntities as getStocks } from 'app/entities/stock/stock.reducer';
 import { getEntities as getStores } from 'app/entities/store/store.reducer';
 import { ActionType } from 'app/shared/model/enumerations/action-type.model';
 import { createEntity, getEntity, updateEntity } from './action.reducer';
-import { useForm } from 'react-hook-form';
 
 export const ActionUpdate = () => {
   const dispatch = useAppDispatch();

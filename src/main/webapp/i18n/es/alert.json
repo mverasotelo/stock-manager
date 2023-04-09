@@ -2,7 +2,10 @@
   "stockmanagerApp": {
     "alert": {
       "home": {
-        "title": "Alertas",
+        "title": {
+          "active": "Alertas activas",
+          "history": "Historial de alertas"
+        },
         "notFound": "Ninguna alerta encontrada",
         "history": "Historial de alertas",
         "active": "Mostrar alertas activas"
