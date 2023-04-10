@@ -30,8 +30,6 @@ public class StockDTO implements Serializable {
 
     private StoreDTO store;
 
-    private Boolean isUnderReorderPoint;
-
 
     public Long getId() {
         return id;
@@ -111,14 +109,6 @@ public class StockDTO implements Serializable {
 
     public static Long getActualStock(StockDTO stockDTO) {
         return stockDTO.getActualStock();
-    }
-
-    public Boolean getIsUnderReorderPoint() {
-        return actualStock < reorderPoint;
-    }
-
-    public void setIsUnderReorderPoint(Boolean isUnderReorderPoint) {
-        this.isUnderReorderPoint = isUnderReorderPoint;
     }
 
     @Override

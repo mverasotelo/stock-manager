@@ -119,8 +119,8 @@ export const Stock = () => {
                 <th className="hand" onClick={sort('actualStock')}>
                   <Translate contentKey="stockmanagerApp.stock.actualStock">Actual Stock</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('isUnderReorderPoint')}>
-                  <Translate contentKey="stockmanagerApp.stock.status">Status</Translate> <FontAwesomeIcon icon="sort" />
+                <th>
+                  <Translate contentKey="stockmanagerApp.stock.status">Status</Translate>
                 </th>
                 {/* <th className="hand" onClick={sort('reorderPoint')}>
                     <Translate contentKey="stockmanagerApp.stock.reorderPoint">Reorder Point</Translate> <FontAwesomeIcon icon="sort" />
@@ -147,7 +147,7 @@ export const Stock = () => {
                   <td>{stock.article?.description}</td>
                   <td>{stock.store ? stock.store.code : '-'}</td>
                   <td>{stock.actualStock}</td>
-                  <td><FontAwesomeIcon icon={faCircle} color={stock.isUnderReorderPoint ? "red" : "green"} /></td>
+                  <td><FontAwesomeIcon icon={faCircle} color={stock.actualStock <  stock.reorderPoint ? "red" : "green"} /></td>
 
                   {/* <td>{stock.reorderPoint}</td>
                     <td>{stock.maxStock}</td> */}

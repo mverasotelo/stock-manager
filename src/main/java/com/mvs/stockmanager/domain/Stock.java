@@ -55,9 +55,6 @@ public class Stock implements Serializable {
     // @JsonIgnoreProperties(value = { "alerts", "stocks", "actions" }, allowSetters = true)
     private Store store;
 
-    @Transient
-    Boolean isUnderReorderPoint; 
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -86,19 +83,6 @@ public class Stock implements Serializable {
         this.actualStock = actualStock;
     }
 
-    public Long getReorderPoint() {
-        return this.reorderPoint;
-    }
-
-    public Stock reorderPoint(Long reorderPoint) {
-        this.setReorderPoint(reorderPoint);
-        return this;
-    }
-
-    public void setReorderPoint(Long reorderPoint) {
-        this.reorderPoint = reorderPoint;
-    }
-
     public Long getMaxStock() {
         return this.maxStock;
     }
@@ -110,6 +94,19 @@ public class Stock implements Serializable {
 
     public void setMaxStock(Long maxStock) {
         this.maxStock = maxStock;
+    }
+
+    public Stock reorderPoint(Long reorderPoint) {
+        this.setReorderPoint(reorderPoint);
+        return this;
+    }
+
+    public Long getReorderPoint() {
+        return reorderPoint;
+    }
+
+    public void setReorderPoint(Long reorderPoint) {
+        this.reorderPoint = reorderPoint;
     }
 
     public String getSection() {
@@ -237,14 +234,6 @@ public class Stock implements Serializable {
     public Stock store(Store store) {
         this.setStore(store);
         return this;
-    }
-
-    public Boolean getIsUnderReorderPoint() {
-        return this.actualStock < this.reorderPoint;
-    }
-
-    public void setIsUnderReorderPoint(Boolean isUnderReorderPoint) {
-        this.isUnderReorderPoint = isUnderReorderPoint;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

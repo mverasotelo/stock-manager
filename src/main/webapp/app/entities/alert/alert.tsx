@@ -101,9 +101,12 @@ export const Alert = () => {
       <br />
       <Row className="justify-content-center">
         <Col md="8">
+        {active ? 
           <h2 className="text-center" id="stockmanagerApp.article.home.historyLabel" data-cy="ArticleCreateUpdateHeading">
-          <Translate contentKey={active ? "stockmanagerApp.alert.home.title.active" : "stockmanagerApp.alert.home.title.history"}>Alerts</Translate>
-          </h2>
+          <Translate contentKey= "stockmanagerApp.alert.home.title.active">Alerts</Translate></h2> :
+          <h2 className="text-center" id="stockmanagerApp.article.home.historyLabel" data-cy="ArticleCreateUpdateHeading">
+          Historial de alertas</h2>
+        }
         </Col>
       </Row>
       <br />

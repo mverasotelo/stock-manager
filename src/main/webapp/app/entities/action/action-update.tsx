@@ -28,6 +28,7 @@ export const ActionUpdate = () => {
   const stocks = useAppSelector(state => state.stock.entities);
 
   const [selectedStore, setSelectedStore] = useState(0);
+  const [selectedDestinationStore, setSelectedDestinationStore] = useState(0);
   const [selectedStock, setSelectedStock] = useState(0);
 
   const handleClose = () => {
@@ -55,6 +56,7 @@ export const ActionUpdate = () => {
   useEffect(() => {
     if (updateSuccess) {
       setSelectedStock(0);
+      setSelectedDestinationStore(0);
       handleClose();
     }
   }, [updateSuccess]);
@@ -62,13 +64,17 @@ export const ActionUpdate = () => {
   const saveEntity = values => {
     // values.datetime = convertDateTimeToServer(values.datetime);
     let stock = {id:selectedStock};
+    let store = null;
+    if(actionType==ActionType.OUT){
+      let store = {id:selectedDestinationStore};
+    }
 
     const entity = {
       ...actionEntity,
       ...values,
       id:null,
       type: actionType,
-      store:null,
+      store,
       stock
     };
 
@@ -99,6 +105,9 @@ export const ActionUpdate = () => {
     setSelectedStock(event.target.value);    
   };
 
+  const selectDestinationStore=(event) => {
+    setSelectedDestinationStore(event.target.value);    
+  };
 
 
   return (
@@ -200,21 +209,25 @@ export const ActionUpdate = () => {
                   validate={{
                     required: { value: true, message: 'Este campo es obligatorio.' },
                     min: { value: 1, message: 'La cantidad debe ser mayor a 0.' },
-                  }}                />
-                { actionType==ActionType.OUT ?
-                  <ValidatedField id="action-destination-store" name="destinationStore" data-cy="destination-store" label={translate('stockmanagerApp.action.destinationStore')} type="select"
-                  validate={{
-                    required: { value: true, message: 'Este campo es obligatorio.' },
-                  }}
-                  disabled={!isNew}
-                >
-                <option value="" key="0"></option>
-                  {stores 
-                    ? stores.filter(otherEntity=> otherEntity.id!=selectedStore).map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.code}
-                      </option>
-                    ))
+                  }} />
+                {actionType == ActionType.OUT ?
+                  <ValidatedField id="action-destination-store" name="destinationStore" data-cy="destination-store" 
+                  label={translate('stockmanagerApp.action.destinationStore')} 
+                  type="select"
+                    value={selectedDestinationStore}
+                    onChange={selectDestinationStore}
+                    validate={{
+                      required: { value: true, message: 'Este campo es obligatorio.' },
+                    }}
+                    disabled={!isNew}
+                  >
+                    <option value="" key="0"></option>
+                    {stores
+                      ? stores.filter(otherEntity => otherEntity.id != selectedStore).map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.code}
+                        </option>
+                      ))
                     : null}
                 </ValidatedField>
                 :null}
